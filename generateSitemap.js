@@ -7,5 +7,5 @@ const sitemap = new SitemapStream({ hostname: 'https://www.2048qp.com' });
 const writeStream = createWriteStream('./sitemap.xml');
 sitemap.pipe(writeStream);
 
-sitemap.write({ url: '/', changefreq: 'daily', priority: 0.3 });
+sitemap.write({ url: '/', changefreq: 'daily', priority: 0.4 });
 sitemap.end();
