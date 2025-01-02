@@ -1,13 +1,11 @@
-  const { SitemapStream, streamToPromise } = require( 'sitemap' );
-  const { Readable } = require( 'stream' );
+const { createWriteStream } = require('fs');
+const { SitemapStream } = require('sitemap');
 
-  // An array with your links
-  const links = [{ url: '/',  changefreq: 'daily', priority: 0.3  }];
+// Creates a sitemap object given the input configuration with URLs
+const sitemap = new SitemapStream({ hostname: 'https://www.2048qp.com' });
 
-  // Create a stream to write to
-  const stream = new SitemapStream( { hostname: 'https://www.2048qp.com' } );
+const writeStream = createWriteStream('./sitemap.xml');
+sitemap.pipe(writeStream);
 
-  // Return a promise that resolves with your XML string
-  return streamToPromise(Readable.from(links).pipe(stream)).then((data) =>
-    data.toString()
-  );
+sitemap.write({ url: '/', changefreq: 'daily', priority: 0.3 });
+sitemap.end();
